@@ -1,0 +1,70 @@
+@startuml
+class "AVL"
+"AVL" : int id
+"AVL" : String imeiNumber
+"AVL" : String serialNumber
+"AVL" --> "1" "AvlModel"
+"AVL" --> "1" "SIM"
+"AVL" *-- "AvlStateHistory"
+
+class "AvlModel"
+"AvlModel" : int id
+"AvlModel" : String name
+"AvlModel" --> "1" "AvlBrand"
+
+class "AvlBrand"
+"AvlBrand" : int id
+"AvlBrand" : String name
+
+class "AvlState"
+"AvlState" : int id
+"AvlState" : String name
+
+class "AvlStateHistory"
+"AvlStateHistory" : AvlState state
+"AvlStateHistory" : Date startDate
+"AvlStateHistory" : Date endDate
+"AvlStateHistory" --> "1" "AvlState"
+
+class "SIM"
+"SIM" : int id
+"SIM" : String iccid
+"SIM" : String phoneNumber
+
+class MobileOperator
+"MobileOperator" : int id
+"MobileOperator" : String name
+
+"SIM" --> "1" "MobileOperator"
+
+
+
+class "Customer"
+"Customer" : int id
+"Customer" : String name
+"Customer" o-- "Vehicle"
+
+
+class "Vehicle"
+"Vehicle" : int id
+"Vehicle" : String name
+"Vehicle" : String plate
+"Vehicle" : Date creationDate
+"Vehicle" --> "1" "AVL"
+"Vehicle" --> "1" "VehicleModel"
+
+class "VehicleModel"
+"VehicleModel" : int id
+"VehicleModel" : String name
+"VehicleModel" --> "1" "VehicleBrand"
+
+class "VehicleBrand"
+"VehicleBrand" : int id
+"VehicleBrand" : String name
+
+
+
+
+@enduml
+
+
