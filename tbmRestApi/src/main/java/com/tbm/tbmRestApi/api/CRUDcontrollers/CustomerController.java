@@ -1,0 +1,31 @@
+package com.tbm.tbmRestApi.api.CRUDcontrollers;
+
+import com.tbm.tbmRestApi.model.Customer;
+import com.tbm.tbmRestApi.model.repositories.CustomerRepository;
+import com.tbm.tbmRestApi.service.crudServices.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RequestMapping("api/customer")
+@RestController
+public class CustomerController {
+    private final CustomerRepository customerRepository;
+
+    @Autowired
+    public CustomerController(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
+    @PostMapping
+    public void addCustomer(@RequestBody Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    @GetMapping
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
+    }
+}
