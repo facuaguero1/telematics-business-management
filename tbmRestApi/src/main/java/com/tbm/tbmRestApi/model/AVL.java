@@ -1,5 +1,6 @@
 package com.tbm.tbmRestApi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -35,15 +36,11 @@ public class AVL {
 
     public AVL(){}
 
-    public AVL(
-               @JsonProperty("imeiNumber") String imeiNumber,
-               @JsonProperty("serialNumber") String serialNumber) {
-        this.imeiNumber = imeiNumber;
+    public AVL(@JsonProperty("imeiNumber") String imeiNumber,
+               @JsonProperty("serialNumber") String serialNumber)
+    {   this.imeiNumber = imeiNumber;
         this.serialNumber = serialNumber;
-        this.avlModel = null;
-        this.SIM = null;
-        this.state = null;
-    }
+        this.state = new AvlStateHistory();}
 
     public Integer getId() {
         return id;

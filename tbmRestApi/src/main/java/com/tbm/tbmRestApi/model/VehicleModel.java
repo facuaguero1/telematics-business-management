@@ -1,5 +1,7 @@
 package com.tbm.tbmRestApi.model;
 
+import com.tbm.tbmRestApi.model.transferObject.VehicleModelTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,16 +16,19 @@ public class VehicleModel {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id-vehicleBrand", nullable = false)
     private VehicleBrand vehicleBrand;
 
 
     public VehicleModel(){}
 
-    public VehicleModel(String name, VehicleBrand vehicleBrand) {
+    public VehicleModel(String name) {
         this.name = name;
-        this.vehicleBrand = vehicleBrand;
+    }
+
+    public VehicleModel(VehicleModelTO vehicleModelTO) {
+        this.name = vehicleModelTO.getName();
     }
 
     public Integer getId() {

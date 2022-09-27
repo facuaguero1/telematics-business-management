@@ -1,5 +1,10 @@
 package com.tbm.tbmRestApi.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.tbm.tbmRestApi.model.transferObject.AvlModelTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,16 +20,21 @@ public class AvlModel {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id-avlBrand", nullable = false)
     private AvlBrand avlBrand;
 
 
     public AvlModel(){}
 
-    public AvlModel(String name, AvlBrand avlBrand) {
+    public AvlModel(String name)
+    {
         this.name = name;
-        this.avlBrand = avlBrand;
+    }
+
+    public AvlModel(AvlModelTO avlModelTO)
+    {
+        this.name = avlModelTO.getName();
     }
 
     public Integer getId() {

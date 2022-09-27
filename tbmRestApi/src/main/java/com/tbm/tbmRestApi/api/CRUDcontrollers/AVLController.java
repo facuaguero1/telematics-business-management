@@ -1,7 +1,8 @@
 package com.tbm.tbmRestApi.api.CRUDcontrollers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tbm.tbmRestApi.model.AVL;
-import com.tbm.tbmRestApi.model.repositories.AVLRepository;
+import com.tbm.tbmRestApi.service.crudServices.AVLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,20 +12,23 @@ import java.util.List;
 @RestController
 public class AVLController {
 
-    private final AVLRepository avlRepository;
+    private final AVLService avlService;
 
     @Autowired
-    public AVLController(AVLRepository avlRepository) {
-        this.avlRepository = avlRepository;
+    public AVLController(AVLService avlService) {
+        this.avlService = avlService;
     }
 
     @PostMapping
-    public void addAVL(@RequestBody AVL avl) {
-        avlRepository.save(avl);
+    public void addAVL(@RequestBody AVL avl,
+                       @RequestParam(name="simId") Integer simId,
+                       @RequestParam(name="avlModelId") Integer avlModelId)
+    {
+        avlService.addAVL(avl, avlModelId, simId);
     }
 
     @GetMapping
     public List<AVL> getAllAvls() {
-        return avlRepository.findAll();
+        return avlService.getAllAvls();
     }
 }
