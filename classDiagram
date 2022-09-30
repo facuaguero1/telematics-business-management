@@ -3,6 +3,7 @@ class "AVL"
 "AVL" : int id
 "AVL" : String imeiNumber
 "AVL" : String serialNumber
+"AVL" : AvlStateHistory state
 "AVL" --> "1" "AvlModel"
 "AVL" --> "1" "SIM"
 "AVL" *-- "AvlStateHistory"
@@ -21,6 +22,8 @@ class "AvlState"
 "AvlState" : String name
 
 class "AvlStateHistory"
+"AvlStateHistory" : int id
+"AvlStateHistory" : AVL avl
 "AvlStateHistory" : AvlState state
 "AvlStateHistory" : Date startDate
 "AvlStateHistory" : Date endDate

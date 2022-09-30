@@ -2,6 +2,7 @@ package com.tbm.tbmRestApi.api.CRUDcontrollers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tbm.tbmRestApi.model.AVL;
+import com.tbm.tbmRestApi.model.transferObject.AvlTO;
 import com.tbm.tbmRestApi.service.crudServices.AVLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +21,12 @@ public class AVLController {
     }
 
     @PostMapping
-    public void addAVL(@RequestBody AVL avl,
-                       @RequestParam(name="simId") Integer simId,
-                       @RequestParam(name="avlModelId") Integer avlModelId)
+    public void addAVL(@RequestBody AvlTO avlTO)
     {
-        avlService.addAVL(avl, avlModelId, simId);
+        avlService.addAVL(avlTO);
     }
 
-    @GetMapping
+    @GetMapping("all")
     public List<AVL> getAllAvls() {
         return avlService.getAllAvls();
     }

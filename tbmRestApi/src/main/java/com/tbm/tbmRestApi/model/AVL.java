@@ -1,7 +1,7 @@
 package com.tbm.tbmRestApi.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tbm.tbmRestApi.model.transferObject.AvlTO;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -21,26 +21,30 @@ public class AVL {
     @Column(nullable = false)
     private String serialNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id-avlModel", nullable = false)
     private AvlModel avlModel;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id-sim")
     private SIM SIM;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id-avlStateHistory", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name="id-avlStateHistory")
     private AvlStateHistory state;
 
 
     public AVL(){}
 
-    public AVL(@JsonProperty("imeiNumber") String imeiNumber,
-               @JsonProperty("serialNumber") String serialNumber)
-    {   this.imeiNumber = imeiNumber;
+    public AVL(String imeiNumber, String serialNumber)
+    {
+        this.imeiNumber = imeiNumber;
         this.serialNumber = serialNumber;
-        this.state = new AvlStateHistory();}
+    }
+    public AVL(AvlTO avlTO)
+    {   this.imeiNumber = avlTO.getImeiNumber();
+        this.serialNumber = avlTO.getSerialNumber();
+    }
 
     public Integer getId() {
         return id;

@@ -1,7 +1,7 @@
 package com.tbm.tbmRestApi.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "AVL_STATE_HISTORIES")
@@ -12,23 +12,28 @@ public class AvlStateHistory {
     @Column(name = "id-avlStateHistory")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id-avl", nullable = false)
+    private AVL avl;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id-avlState", nullable = false)
     private AvlState state;
 
     @Column(nullable = false)
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column
-    private Date endDate;
+    private LocalDateTime endDate;
 
 
     public AvlStateHistory(){}
 
-    public AvlStateHistory(AvlState state, Date startDate, Date endDate) {
-        this.state = state;
+    public AvlStateHistory(AVL avl,LocalDateTime startDate) {
+        /* The state has to be assigned by a service class, so as to not give the model access
+            to a repository. */
+        this.avl = avl;
         this.startDate = startDate;
-        this.endDate = endDate;
     }
 
     public Integer getId() {
@@ -47,19 +52,20 @@ public class AvlStateHistory {
         this.state = state;
     }
 
-    public Date getStartDate() {
+
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 }
